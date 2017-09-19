@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   root "teams#index"
 
   get "/teams/:id" => "teams#index"
+  get "/teams/:id/events" => "events#index"
 end

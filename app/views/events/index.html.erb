@@ -1,0 +1,4 @@
+<p><a href="/teams/<%= @team.id %>/events">全部动态</a></p>
+<% @projects.each do |project| %>
+  <p><a href="/teams/<%= @team.id %>/events?project_id=<%= project.id %>"><%= project.name %>的动态</a></p>
+<% end %>
