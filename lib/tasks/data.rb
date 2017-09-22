@@ -3,12 +3,12 @@ class BaseData
   class << self
     def user_data
       %Q{
-            name            | email
-            Vik             | 1@g.cn
-            Shirley         | 2@g.cn
-            Linda           | 3@g.cn
-            Mary            | 4@g.cn
-            Judy            | 5@g.cn
+            name            | email  | avator
+            Vik             | 1@g.cn | http://images.dunkhome.com/user/avator/904235/thumb_0.jpeg
+            Shirley         | 2@g.cn | http://images.dunkhome.com/user/avator/371643/thumb_100.png
+            Linda           | 3@g.cn | http://images.dunkhome.com/user/avator/893244/thumb_0.jpeg
+            Mary            | 4@g.cn | http://images.dunkhome.com/user/avator/919473/thumb_0.jpeg
+            Judy            | 5@g.cn | http://images.dunkhome.com/user/avator/877889/thumb_1503075757-upload-image.png
       }
     end
 
@@ -26,6 +26,61 @@ class BaseData
             dunkhome   | 杭州当客     | Vik     | Vik,Shirley,Linda,Mary,Judy
             sindex     | 杭州当客     | Vik     | Vik,Shirley,Linda,Mary
             get        | 杭州当客     | Vik     | Vik,Shirley,Linda
+      }
+    end
+
+    def todo_list_data
+      %Q{
+            name       | project      | creator
+            产品原型   | dunkhome     | Vik
+            UI设计     | dunkhome     | Vik
+            后台开发   | dunkhome     | Vik
+            前端开发   | dunkhome     | Vik
+            安卓开发   | sindex       | Shirley
+            ios开发    | sindex       | Shirley
+            bug测试    | sindex       | Shirley
+            安卓开发   | get          | Linda
+            ios开发    | get          | Linda
+            bug测试    | get          | Linda
+      }
+    end
+
+    def todo_data
+      %Q{
+            title            | todo_list  | project  | creator
+            产品原型task1    | 产品原型   | dunkhome | Vik
+            产品原型task2    | 产品原型   | dunkhome | Vik
+            产品原型task3    | 产品原型   | dunkhome | Vik
+            产品原型task4    | 产品原型   | dunkhome | Vik
+            安卓开发task1    | 安卓开发   | sindex   | Shirley
+            安卓开发task2    | 安卓开发   | sindex   | Shirley
+            安卓开发task3    | 安卓开发   | sindex   | Shirley
+            安卓开发task4    | 安卓开发   | sindex   | Shirley
+      }
+    end
+
+    def todo_change_data
+      %Q{
+            title            | modify_column  | column_value  | creator
+            产品原型task1    | status         | 1             | Vik
+            产品原型task1    | status         | 2             | Vik
+            产品原型task2    | status         | 1             | Shirley
+            产品原型task2    | status         | 0             | Shirley
+            产品原型task2    | deleted_at     | 2017-09-21    | Linda
+            安卓开发task3    | assign_user_id | 1             | Shirley
+            安卓开发task3    | assign_user_id | 2             | Mary
+            安卓开发task3    | expire_date    | 2017-09-21    | Mary
+            安卓开发task3    | expire_date    | 2017-09-28    | Judy
+      }
+    end
+
+    def todo_comment_data
+      %Q{
+            todo             | content          | creator | deleted_at
+            产品原型task1    | 这个想法不错哒   |  Mary   |
+            产品原型task2    | wawawawa nice    |  Judy   |
+            产品原型task3    | balabalabala     |  Linda  |
+            产品原型task4    | 怎么说呢....     |  Vik    | 2017-09-21
       }
     end
   end

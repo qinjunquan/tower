@@ -2,7 +2,7 @@ class Event < ActiveRecord::Base
   LOAD_COUNT = 50
   ACTION = { "create" => 0, "update" => 1, "delete" => 2 }
   EVENT_ATTRIBUTES = {
-    "Todo" => [:status, :title, :expire_date, :assign_user_id, :deleted_at]
+    "Todo" => [:status, :expire_date, :assign_user_id, :deleted_at]
   }
 
   belongs_to :project

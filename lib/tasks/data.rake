@@ -3,14 +3,14 @@ require "#{Rails.root}/lib/tasks/data.rb"
 
 namespace :data do
   task :drop_tables => :environment do
-    [User, Team, UserTeamShip, Project, UserProjectShip].each do |model|
-      model.delete_all
+    ["users", "teams", "user_team_ships", "projects", "user_project_ships", "todo_lists", "todo_comments", "todos", "events"].each do |table|
+      ActiveRecord::Base.connection.execute("truncate #{table}")
     end
   end
 
   task :users => :environment do
     parse_table(BaseData.user_data).map do |data|
-      User.create!(:email => data[:email], :password => "123123", :name => data[:name])
+      User.create!(:email => data[:email], :password => "123123", :name => data[:name], :avator => data[:avator])
     end
   end
 
@@ -35,12 +35,54 @@ namespace :data do
     end
   end
 
+  task :todo_lists => :environment do
+    parse_table(BaseData.todo_list_data).map do |data|
+      creator = User.find_by_name(data[:creator])
+      User.current = creator
+      project = Project.find_by_name(data[:project])
+      TodoList.create(:name => data[:name], :creator_id => creator.id, :project_id => project.id)
+    end
+  end
+
+  task :todos => :environment do
+    parse_table(BaseData.todo_data).map do |data|
+      creator = User.find_by_name(data[:creator])
+      User.current = creator
+      todo_list = TodoList.find_by_name(data[:todo_list])
+      project = Project.find_by_name(data[:project])
+      Todo.create(:title => data[:title], :creator_id => creator.id, :project_id => project.id, :todo_list_id => todo_list.id)
+    end
+  end
+
+  task :todo_changes => :environment do
+    parse_table(BaseData.todo_change_data).map do |data|
+      creator = User.find_by_name(data[:creator])
+      User.current = creator
+      todo = Todo.find_by_title(data[:title])
+      todo.update_attribute(data[:modify_column].to_sym, data[:column_value])
+    end
+  end
+
+  task :todo_comments => :environment do
+    parse_table(BaseData.todo_comment_data).map do |data|
+      creator = User.find_by_name(data[:creator])
+      User.current = creator
+      todo = Todo.find_by_title(data[:todo])
+      comment = TodoComment.create(:content => data[:content], :creator_id => creator.id, :todo_id => todo.id)
+      comment.update_attribute(:deleted_at, data[:deleted_at]) if data[:deleted_at].present?
+    end
+  end
+
   task :init => :environment do
     tasks = [
       "data:drop_tables",
       "data:users",
       "data:teams",
-      "data:projects"
+      "data:projects",
+      "data:todo_lists",
+      "data:todos",
+      "data:todo_changes",
+      "data:todo_comments"
     ]
     tasks.each { |task| Rake::Task[task].invoke }
   end
