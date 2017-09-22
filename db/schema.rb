@@ -11,19 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170919145640) do
+ActiveRecord::Schema.define(version: 20170922093709) do
 
   create_table "events", force: true do |t|
     t.integer  "user_id"
-    t.integer  "kind"
     t.integer  "resource_id"
     t.string   "resource_type"
-    t.string   "resource_title"
-    t.text     "resource_content"
     t.integer  "project_id"
     t.integer  "team_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "category_id"
+    t.string   "category_type"
+    t.integer  "sub_resource_id"
+    t.string   "sub_resource"
+    t.integer  "action",           default: 0
+    t.text     "resource_changes"
   end
 
   create_table "projects", force: true do |t|
@@ -73,7 +76,12 @@ ActiveRecord::Schema.define(version: 20170919145640) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "status",         default: 0
+    t.datetime "delete_at"
+    t.boolean  "is_delete",      default: false
+    t.datetime "deleted_at"
   end
+
+  add_index "todos", ["deleted_at"], name: "index_todos_on_deleted_at", using: :btree
 
   create_table "user_project_ships", force: true do |t|
     t.integer  "user_id"
