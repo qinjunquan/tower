@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170922094915) do
+ActiveRecord::Schema.define(version: 20170922142053) do
 
   create_table "events", force: true do |t|
     t.integer  "user_id"
@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 20170922094915) do
     t.integer  "category_id"
     t.string   "category_type"
     t.integer  "sub_resource_id"
-    t.string   "sub_resource"
-    t.integer  "action",           default: 0
+    t.string   "sub_resource_type"
+    t.integer  "action",            default: 0
     t.text     "resource_changes"
   end
 
@@ -55,7 +55,10 @@ ActiveRecord::Schema.define(version: 20170922094915) do
     t.integer  "like_count",      default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
+
+  add_index "todo_comments", ["deleted_at"], name: "index_todo_comments_on_deleted_at", using: :btree
 
   create_table "todo_lists", force: true do |t|
     t.string   "name"
@@ -63,7 +66,10 @@ ActiveRecord::Schema.define(version: 20170922094915) do
     t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
+
+  add_index "todo_lists", ["deleted_at"], name: "index_todo_lists_on_deleted_at", using: :btree
 
   create_table "todos", force: true do |t|
     t.text     "title"

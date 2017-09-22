@@ -16,7 +16,13 @@ class Event < ActiveRecord::Base
 
   def set_relate_attributes
     case self.resource_type
-    when "Todo"
+    when "Todo", "TodoComment", "TodoList"
+      if self.resource_type == "TodoComment"
+        self.sub_resource_id = self.resource_id
+        self.sub_resource_type = self.resource_type
+        self.resource_id = self.sub_resource.todo_id
+        self.resource_type = "Todo"
+      end
       self.project_id = self.resource.project_id
       self.category_type = "Project"
       self.category_id = self.project_id
@@ -41,7 +47,9 @@ class Event < ActiveRecord::Base
         event_attr[:action] = ACTION["delete"]
       else
         event_attr[:action] = ACTION["update"]
-        event_attr[:resource_changes] = obj.changes.select { |k, v| EVENT_ATTRIBUTES[obj.class.to_s].include?(k.to_sym) }
+        if EVENT_ATTRIBUTES[obj.class.to_s].present?
+          event_attr[:resource_changes] = obj.changes.select { |k, v| EVENT_ATTRIBUTES[obj.class.to_s].include?(k.to_sym) }
+        end
         return true if event_attr[:resource_changes].blank?
       end
       event_attr[:user_id] = User.current.id

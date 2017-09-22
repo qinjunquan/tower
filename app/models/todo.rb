@@ -3,6 +3,7 @@ class Todo < ActiveRecord::Base
 
   belongs_to :todo_list
   belongs_to :project
+  has_many :todo_comments
   belongs_to :assign_user, :class_name => User, :foreign_key => :assign_user_id
 
   scope :publish, lambda { where("deleted_at is null") }
