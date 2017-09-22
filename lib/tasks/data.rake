@@ -27,7 +27,8 @@ namespace :data do
   task :projects => :environment do
     parse_table(BaseData.project_data).map do |data|
       creator = User.find_by_name(data[:creator])
-      project = Project.create!(:name => data[:name], :creator_id => creator.id)
+      team = Team.where(:name => data[:team]).first_or_create
+      project = Project.create!(:name => data[:name], :team_id => team.id, :creator_id => creator.id)
       User.where(:name => data[:members].to_s.split(",").map(&:strip)).each do |user|
         project.user_project_ships.create(:user_id => user.id)
       end
