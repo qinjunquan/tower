@@ -70,8 +70,12 @@ class BaseData
             产品原型task2    | deleted_at     |               | Linda
             安卓开发task3    | assign_user_id | 1             | Shirley
             安卓开发task3    | assign_user_id | 2             | Mary
-            安卓开发task3    | expire_date    | 2017-09-21    | Mary
+            安卓开发task3    | expire_date    | 2017-09-24    | Mary
             安卓开发task3    | expire_date    | 2017-09-28    | Judy
+            安卓开发task4    | expire_date    | 2017-09-23    | Judy
+            安卓开发task4    | expire_date    | 2017-09-25    | Judy
+            安卓开发task4    | expire_date    | 2017-09-29    | Judy
+            安卓开发task4    | expire_date    | 2017-10-01    | Judy
       }
     end
 

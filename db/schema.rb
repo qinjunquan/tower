@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170922142053) do
+ActiveRecord::Schema.define(version: 20170924012331) do
 
   create_table "events", force: true do |t|
     t.integer  "user_id"
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 20170922142053) do
     t.text     "brief"
     t.integer  "creator_id"
     t.integer  "assign_user_id"
-    t.datetime "expire_date"
+    t.date     "expire_date"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "status",         default: 0

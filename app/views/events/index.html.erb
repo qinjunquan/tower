@@ -24,6 +24,7 @@
         <img width="40px" src="<%= event.user.avator %>">
         <%= event.user.name %>
         <%= event.created_at.strftime("%H:%M") %>
+        <%= event.action_name %>
         <%= event.resource_link %>
         <%= event.sub_resource_link %>
       </li>

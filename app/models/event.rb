@@ -2,9 +2,12 @@ class Event < ActiveRecord::Base
   LOAD_COUNT = 50
   ACTION = { "create" => 0, "update" => 1, "delete" => 2, "revert" => 3 }
   ACTION_NAME = { "创建了" => 0, "修改了" => 1, "删除了" => 2, "恢复了" => 3 }
+  WEEK = ["日", "一", "二", "三", "四", "五", "六"]
   EVENT_ATTRIBUTES = {
     "Todo" => [:status, :expire_date, :assign_user_id]
   }
+
+  serialize :resource_changes, Hash
 
   belongs_to :user
   belongs_to :project
@@ -46,6 +49,14 @@ class Event < ActiveRecord::Base
     self.sub_resource.try(:content) || self.sub_resource.try(:name) || self.sub_resource.try(:title)
   end
 
+  def action_name
+    if self.resource_changes.present?
+      formated_resource_changes
+    else
+      ACTION_NAME.key(self.action) + I18n.t("activerecord.models.#{self.sub_resource_type.try(:underscore) || self.resource_type.underscore}.")
+    end
+  end
+
   private
   def set_relate_attributes
     case self.resource_type
@@ -61,6 +72,12 @@ class Event < ActiveRecord::Base
       self.category_id = self.project_id
       self.team_id = self.project.team_id
     end
+  end
+
+  def formated_resource_changes
+    attr = self.resource_changes.keys.first
+    values = self.resource_changes.values.first
+    self.resource.class.formated_changes(attr, values)
   end
 
   class << self
@@ -91,6 +108,24 @@ class Event < ActiveRecord::Base
       event_attr[:resource_id] = obj.id
       event_attr[:resource_type] = obj.class.to_s
       Event.create(event_attr)
+    end
+
+    def formated_date(date, nil_value="没有时间")
+      if date.nil?
+        nil_value
+      elsif date.today?
+        "今天"
+      elsif date.tomorrow.today?
+        "昨天"
+      elsif date.yesterday.today?
+        "明天"
+      elsif date >= Date.today.beginning_of_week && date <= Date.today.end_of_week
+        "本周#{WEEK[date.wday]}"
+      elsif date >= Date.today.next_week.beginning_of_week && date <= Date.today.next_week.end_of_week
+        "下周#{WEEK[date.wday]}"
+      else
+        date.strftime("%Y-%m-%d")
+      end
     end
   end
 end
