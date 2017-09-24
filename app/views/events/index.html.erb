@@ -33,7 +33,7 @@
         </li>
       <% end %>
     </ul>
-    <div id="js-loadmore" data-page=<%= params[:page].to_i %> data-lastid=<%= @events.last.try(:id) %> data-tid=<%= params[:id] %> data-pid=<%= params[:project_id] %> >
+    <div id="js-loadmore" data-page=<%= params[:page].to_i %> data-lastid=<%= @events.last.try(:id) %> data-tid=<%= params[:team_id] %> data-pid=<%= params[:project_id] %> >
       <p id="js-loadmore-hint" style="display:none">正在加载更多</p>
     </div>
   </div>

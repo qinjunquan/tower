@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   root "teams#index"
 
   get "/teams/:id" => "teams#index"
-  get "/teams/:id/events" => "events#index"
-  get "/teams/:id/events/loadmore" => "events#loadmore"
+  get "/teams/:team_id/events" => "events#index"
+  get "/teams/:team_id/events/loadmore" => "events#loadmore"
 end

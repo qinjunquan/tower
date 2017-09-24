@@ -9,6 +9,14 @@ class User < ActiveRecord::Base
   has_many :teams, :through => :user_team_ships
   has_many :projects, :through => :user_project_ships
 
+  def project_ids
+    self.user_project_ships.map(&:project_id)
+  end
+
+  def team_ids
+    self.user_team_ships.map(&:team_id)
+  end
+
   class << self
     def current
       Thread.current[:user]

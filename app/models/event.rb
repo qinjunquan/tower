@@ -83,8 +83,12 @@ class Event < ActiveRecord::Base
   class << self
     def query(options = {})
       scoped = Event.includes(:user, :category, :resource, :sub_resource).all
-      scoped = scoped.where(:team_id => options[:team_id].to_i) if options[:team_id].present?
-      scoped = scoped.where(:project_id => options[:project_id].to_i) if options[:project_id].present?
+      scoped = scoped.where(:team_id => options[:team_id]) if options[:team_id].present?
+      if options[:project_id].present?
+        scoped = scoped.where(:project_id => options[:project_id])
+      else
+        scoped = scoped.where(:project_id => User.current.project_ids + [nil])
+      end
       scoped = scoped.page(options[:page].to_i).per(LOAD_COUNT)
       scoped
     end
