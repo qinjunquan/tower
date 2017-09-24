@@ -56,6 +56,26 @@ class BaseData
             安卓开发task2    | 安卓开发   | sindex   | Shirley
             安卓开发task3    | 安卓开发   | sindex   | Shirley
             安卓开发task4    | 安卓开发   | sindex   | Shirley
+            ios开发task1     | ios开发    | get      | Linda
+            ios开发task2     | ios开发    | get      | Linda
+            ios开发task3     | ios开发    | get      | Linda
+            ios开发task4     | ios开发    | get      | Linda
+            ios开发task5     | ios开发    | get      | Linda
+            ios开发task6     | ios开发    | get      | Linda
+            ios开发task7     | ios开发    | get      | Linda
+            ios开发task8     | ios开发    | get      | Linda
+            ios开发task9     | ios开发    | get      | Linda
+            ios开发task10    | ios开发    | get      | Linda
+            ios开发task11    | ios开发    | get      | Linda
+            ios开发task12    | ios开发    | get      | Linda
+            ios开发task13    | ios开发    | get      | Linda
+            ios开发task14    | ios开发    | get      | Linda
+            ios开发task15    | ios开发    | get      | Linda
+            ios开发task16    | ios开发    | get      | Linda
+            ios开发task17    | ios开发    | get      | Linda
+            ios开发task18    | ios开发    | get      | Linda
+            ios开发task19    | ios开发    | get      | Linda
+            ios开发task20    | ios开发    | get      | Linda
       }
     end
 
@@ -76,12 +96,54 @@ class BaseData
             安卓开发task4    | expire_date    | 2017-09-25    | Judy
             安卓开发task4    | expire_date    | 2017-09-29    | Judy
             安卓开发task4    | expire_date    | 2017-10-01    | Judy
+            产品原型task3    | status         | 1             | Vik
+            产品原型task3    | status         | 2             | Vik
+            产品原型task3    | status         | 1             | Shirley
+            产品原型task4    | status         | 0             | Shirley
+            产品原型task4    | deleted_at     | 2017-09-21    | Linda
+            产品原型task4    | deleted_at     |               | Linda
       }
     end
 
     def todo_comment_data
       %Q{
             todo             | content          | creator | deleted_at
+            产品原型task1    | 这个想法不错哒   |  Mary   |
+            产品原型task2    | wawawawa nice    |  Judy   |
+            产品原型task3    | balabalabala     |  Linda  |
+            产品原型task4    | 怎么说呢....     |  Vik    | 2017-09-21
+            产品原型task1    | 这个想法不错哒   |  Mary   |
+            产品原型task2    | wawawawa nice    |  Judy   |
+            产品原型task3    | balabalabala     |  Linda  |
+            产品原型task4    | 怎么说呢....     |  Vik    | 2017-09-21
+            产品原型task1    | 这个想法不错哒   |  Mary   |
+            产品原型task2    | wawawawa nice    |  Judy   |
+            产品原型task3    | balabalabala     |  Linda  |
+            产品原型task4    | 怎么说呢....     |  Vik    | 2017-09-21
+            产品原型task1    | 这个想法不错哒   |  Mary   |
+            产品原型task2    | wawawawa nice    |  Judy   |
+            产品原型task3    | balabalabala     |  Linda  |
+            产品原型task4    | 怎么说呢....     |  Vik    | 2017-09-21
+            产品原型task1    | 这个想法不错哒   |  Mary   |
+            产品原型task2    | wawawawa nice    |  Judy   |
+            产品原型task3    | balabalabala     |  Linda  |
+            产品原型task4    | 怎么说呢....     |  Vik    | 2017-09-21
+            产品原型task1    | 这个想法不错哒   |  Mary   |
+            产品原型task2    | wawawawa nice    |  Judy   |
+            产品原型task3    | balabalabala     |  Linda  |
+            产品原型task4    | 怎么说呢....     |  Vik    | 2017-09-21
+            产品原型task1    | 这个想法不错哒   |  Mary   |
+            产品原型task2    | wawawawa nice    |  Judy   |
+            产品原型task3    | balabalabala     |  Linda  |
+            产品原型task4    | 怎么说呢....     |  Vik    | 2017-09-21
+            产品原型task1    | 这个想法不错哒   |  Mary   |
+            产品原型task2    | wawawawa nice    |  Judy   |
+            产品原型task3    | balabalabala     |  Linda  |
+            产品原型task4    | 怎么说呢....     |  Vik    | 2017-09-21
+            产品原型task1    | 这个想法不错哒   |  Mary   |
+            产品原型task2    | wawawawa nice    |  Judy   |
+            产品原型task3    | balabalabala     |  Linda  |
+            产品原型task4    | 怎么说呢....     |  Vik    | 2017-09-21
             产品原型task1    | 这个想法不错哒   |  Mary   |
             产品原型task2    | wawawawa nice    |  Judy   |
             产品原型task3    | balabalabala     |  Linda  |

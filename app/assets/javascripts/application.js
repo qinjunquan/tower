@@ -12,4 +12,11 @@
 //
 //= require jquery
 //= require jquery-ui
-//= require_tree .
+//= require_tree
+//= require app
+//= require global
+//= require event-index
+$(document).ready(function() {
+  app.global.init();
+  app.eventIndex.init();
+})

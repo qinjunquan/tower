@@ -1,33 +1,40 @@
-<p><a href="/teams/<%= @team.id %>/events">全部动态</a></p>
-<% @projects.each do |project| %>
-  <p><a href="/teams/<%= @team.id %>/events?project_id=<%= project.id %>"><%= project.name %>的动态</a></p>
-<% end %>
-<div>
-  <ul>
-    <% current_yday = nil %>
-    <% current_category_mark = nil %>
-    <% @events.each do |event| %>
-      <% if current_yday.nil? || current_yday != event.created_at.yday %>
-        <% current_category_mark = event.category_mark %>
-        <% current_yday = event.created_at.yday %>
+<div id="js-event-index">
+  <div>
+    <a href="/teams/<%= @team.id %>/events">全部动态</a>
+    <% @projects.each do |project| %>
+      <a href="/teams/<%= @team.id %>/events?project_id=<%= project.id %>"><%= project.name %>的动态</a>
+    <% end %>
+  </div>
+  <div>
+    <ul id="js-event-list">
+      <% current_yday = nil %>
+      <% current_category_mark = nil %>
+      <% @events.each do |event| %>
+        <% if current_yday.nil? || current_yday != event.created_at.yday %>
+          <% current_category_mark = event.category_mark %>
+          <% current_yday = event.created_at.yday %>
+          <li>
+            <%= event_time_html(event.created_at) %>
+            <%= event.category_link %>
+          </li>
+        <% elsif current_category_mark.nil? || current_category_mark != event.category_mark %>
+          <% current_category_mark = event.category_mark %>
+          <li>
+            <%= event.category_link %>
+          </li>
+        <% end %>
         <li>
-          <%= event_time_html(event.created_at) %>
-          <%= event.category_link %>
-        </li>
-      <% elsif current_category_mark.nil? || current_category_mark != event.category_mark %>
-        <% current_category_mark = event.category_mark %>
-        <li>
-          <%= event.category_link %>
+          <img width="40px" src="<%= event.user.avator %>">
+          <%= event.user.name %>
+          <%= event.created_at.strftime("%H:%M") %>
+          <%= event.action_name %>
+          <%= event.resource_link %>
+          <%= event.sub_resource_link %>
         </li>
       <% end %>
-      <li>
-        <img width="40px" src="<%= event.user.avator %>">
-        <%= event.user.name %>
-        <%= event.created_at.strftime("%H:%M") %>
-        <%= event.action_name %>
-        <%= event.resource_link %>
-        <%= event.sub_resource_link %>
-      </li>
-    <% end %>
-  </ul>
+    </ul>
+    <div id="js-loadmore" data-page=<%= params[:page].to_i %> data-lastid=<%= @events.last.try(:id) %> data-tid=<%= params[:id] %> data-pid=<%= params[:project_id] %> >
+      <p id="js-loadmore-hint" style="display:none">正在加载更多</p>
+    </div>
+  </div>
 </div>
