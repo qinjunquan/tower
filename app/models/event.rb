@@ -1,10 +1,12 @@
 class Event < ActiveRecord::Base
   LOAD_COUNT = 50
-  ACTION = { "create" => 0, "update" => 1, "delete" => 2 }
+  ACTION = { "create" => 0, "update" => 1, "delete" => 2, "revert" => 3 }
+  ACTION_NAME = { "创建了" => 0, "修改了" => 1, "删除了" => 2, "恢复了" => 3 }
   EVENT_ATTRIBUTES = {
-    "Todo" => [:status, :expire_date, :assign_user_id, :deleted_at]
+    "Todo" => [:status, :expire_date, :assign_user_id]
   }
 
+  belongs_to :user
   belongs_to :project
   belongs_to :category, :polymorphic => true
   belongs_to :resource, :polymorphic => true
@@ -14,6 +16,37 @@ class Event < ActiveRecord::Base
 
   before_create :set_relate_attributes
 
+  def category_mark
+    "#{self.category_type}-#{self.category_id}"
+  end
+
+  def category_link
+    %Q{<a target="_blank" href="/#{self.category_type.underscore.pluralize}/#{self.category_id}">#{self.category_name}</a>}.html_safe
+  end
+
+  def resource_link
+    %Q{<a target="_blank" href="/#{self.resource_type.underscore.pluralize}/#{self.resource_id}">#{self.resource_name}</a>}.html_safe
+  end
+
+  def sub_resource_link
+    if sub_resource_id.present?
+      %Q{<a target="_blank" href="/#{self.sub_resource_type.underscore.pluralize}/#{self.sub_resource_id}">#{self.sub_resource_name}</a>}.html_safe
+    end
+  end
+
+  def category_name
+    self.category.try(:name) || self.category.try(:title)
+  end
+
+  def resource_name
+    self.resource.try(:name) || self.resource.try(:title)
+  end
+
+  def sub_resource_name
+    self.sub_resource.try(:content) || self.sub_resource.try(:name) || self.sub_resource.try(:title)
+  end
+
+  private
   def set_relate_attributes
     case self.resource_type
     when "Todo", "TodoComment", "TodoList"
@@ -32,7 +65,7 @@ class Event < ActiveRecord::Base
 
   class << self
     def query(options = {})
-      scoped = Event.all
+      scoped = Event.includes(:user, :category, :resource, :sub_resource).all
       scoped = scoped.where(:team_id => options[:team_id].to_i) if options[:team_id].present?
       scoped = scoped.where(:project_id => options[:project_id].to_i) if options[:project_id].present?
       scoped = scoped.page(options[:page].to_i).per(LOAD_COUNT)
@@ -45,6 +78,8 @@ class Event < ActiveRecord::Base
         event_attr[:action] = ACTION["create"]
       elsif obj.deleted_at.present? && obj.deleted_at_changed?
         event_attr[:action] = ACTION["delete"]
+      elsif obj.deleted_at_changed? && obj.deleted_at.blank?
+        event_attr[:action] = ACTION["revert"]
       else
         event_attr[:action] = ACTION["update"]
         if EVENT_ATTRIBUTES[obj.class.to_s].present?

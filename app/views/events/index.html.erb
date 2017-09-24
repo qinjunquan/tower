@@ -2,3 +2,31 @@
 <% @projects.each do |project| %>
   <p><a href="/teams/<%= @team.id %>/events?project_id=<%= project.id %>"><%= project.name %>的动态</a></p>
 <% end %>
+<div>
+  <ul>
+    <% current_yday = nil %>
+    <% current_category_mark = nil %>
+    <% @events.each do |event| %>
+      <% if current_yday.nil? || current_yday != event.created_at.yday %>
+        <% current_category_mark = event.category_mark %>
+        <% current_yday = event.created_at.yday %>
+        <li>
+          <%= event_time_html(event.created_at) %>
+          <%= event.category_link %>
+        </li>
+      <% elsif current_category_mark.nil? || current_category_mark != event.category_mark %>
+        <% current_category_mark = event.category_mark %>
+        <li>
+          <%= event.category_link %>
+        </li>
+      <% end %>
+      <li>
+        <img width="40px" src="<%= event.user.avator %>">
+        <%= event.user.name %>
+        <%= event.created_at.strftime("%H:%M") %>
+        <%= event.resource_link %>
+        <%= event.sub_resource_link %>
+      </li>
+    <% end %>
+  </ul>
+</div>

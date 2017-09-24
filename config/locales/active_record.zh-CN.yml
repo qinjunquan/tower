@@ -1,0 +1,11 @@
+zh-CN:
+  activerecord:
+    models:
+      todo: '任务'
+      todo_list: '任务清单'
+      todo_comment: '回复'
+    attributes:
+      todo:
+        status: '状态'
+        expire_date: '指派'
+        assign_user_id: '执行人'

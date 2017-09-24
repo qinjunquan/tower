@@ -67,6 +67,7 @@ class BaseData
             产品原型task2    | status         | 1             | Shirley
             产品原型task2    | status         | 0             | Shirley
             产品原型task2    | deleted_at     | 2017-09-21    | Linda
+            产品原型task2    | deleted_at     |               | Linda
             安卓开发task3    | assign_user_id | 1             | Shirley
             安卓开发task3    | assign_user_id | 2             | Mary
             安卓开发task3    | expire_date    | 2017-09-21    | Mary
