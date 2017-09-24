@@ -19,6 +19,8 @@ class Event < ActiveRecord::Base
 
   before_create :set_relate_attributes
 
+  validates_presence_of :user_id
+
   def category_mark
     "#{self.category_type}-#{self.category_id}"
   end

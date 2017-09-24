@@ -8,6 +8,9 @@ class User < ActiveRecord::Base
   has_many :user_project_ships
   has_many :teams, :through => :user_team_ships
   has_many :projects, :through => :user_project_ships
+  validates_presence_of :email, :name
+  validates_uniqueness_of :email, :name
+
 
   def project_ids
     self.user_project_ships.map(&:project_id)
