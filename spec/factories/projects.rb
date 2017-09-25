@@ -6,9 +6,9 @@ FactoryGirl.define do
     creator_id { team.creator_id }
 
     after(:create) do |project|
-      project.user_project_ships.create(:user_id => project.creator_id)
+      create(:user_team_ship, :team => project.team, :user => project.creator)
       project.team.users.each do |user|
-        project.user_project_ships.create(:user_id => user.id)
+        create(:user_project_ship, :project => project, :user => user)
       end
     end
   end
