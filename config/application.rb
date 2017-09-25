@@ -24,5 +24,15 @@ module Tower
     # config.i18n.default_locale = :de
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
+    config.generators do |g|
+      g.test_framework :rspec,
+          fixtures: true,         #为各模型生成测试固件
+          view_specs: false,      #不生成“视图测试”
+          helper_specs: false,    #生成控制器时不生成对应的帮助方法测试文件
+          routing_specs: false,   #不生成针对 config/routes.rb 的测试文件
+          controller_specs: true,
+          request_specs: false
+      g.fixture_replacement :factory_girl, dir: "spec/factories"
+    end
   end
 end
