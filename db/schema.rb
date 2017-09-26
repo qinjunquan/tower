@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170926064619) do
+ActiveRecord::Schema.define(version: 20170926085051) do
 
   create_table "events", force: true do |t|
     t.integer  "user_id"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20170926064619) do
     t.string   "sub_resource_type"
     t.integer  "action",            default: 0
     t.text     "resource_changes"
+    t.integer  "team_id"
   end
 
   create_table "projects", force: true do |t|

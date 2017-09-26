@@ -41,6 +41,7 @@ RSpec.describe TodoList, type: :model do
     expect(event.project_id).to eq(@project.id)
     expect(event.category_type).to eq(@project.class.to_s)
     expect(event.category_id).to eq(@project.id)
+    expect(event.team_id).to eq(@team.id)
     expect(event.resource_changes.blank?).to eq(true)
     expect(event.sub_resource_id.nil?).to eq(true)
     expect(event.sub_resource_type.nil?).to eq(true)

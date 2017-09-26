@@ -45,6 +45,7 @@ RSpec.describe TodoComment, type: :model do
     expect(event.category_id).to eq(@project.id)
     expect(event.resource_type).to eq(@todo.class.to_s)
     expect(event.resource_id).to eq(@todo.id)
+    expect(event.team_id).to eq(@team.id)
     expect(event.resource_changes.blank?).to eq(true)
   end
 end
