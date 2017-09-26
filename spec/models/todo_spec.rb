@@ -58,11 +58,13 @@ RSpec.describe Todo, type: :model do
       @todo.save
       events = Event.where(:resource_id => @todo.id, :resource_type => "Todo")
       expect(events.count).to eq(4)
+    end
 
+    it "should be create event after set deleted_at" do
       @todo.deleted_at = Time.now
       @todo.save
       events = Event.where(:resource_id => @todo.id, :resource_type => "Todo")
-      expect(events.count).to eq(5)
+      expect(events.count).to eq(2)
       event = events.first
       expect(event.action).to eq(Event::ACTION["delete"])
       expect(event.resource_changes.blank?).to eq(true)
