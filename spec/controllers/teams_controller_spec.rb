@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'pry'
 
 RSpec.describe TeamsController, :type => :controller do
-  contenxt "test index action" do
+  context "test index action" do
     context "test get index when user not sign in" do
       it "should be redirect_to sign_in" do
         get :index
