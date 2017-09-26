@@ -17,13 +17,25 @@ RSpec.describe TodoComment, type: :model do
       expect(events.count).to eq(1)
       event = events.first
       expect(event.action).to eq(Event::ACTION["create"])
-      expect(event.user_id).to eq(@user.id)
-      expect(event.project_id).to eq(@project.id)
-      expect(event.category_type).to eq(@project.class.to_s)
-      expect(event.category_id).to eq(@project.id)
-      expect(event.resource_type).to eq(@todo.class.to_s)
-      expect(event.resource_id).to eq(@todo.id)
-      expect(event.resource_changes.blank?).to eq(true)
+      check_event(event)
+
+      @comment.deleted_at = Time.now
+      @comment.save
+      events = Event.where(:sub_resource_id => @comment.id, :sub_resource_type => "TodoComment")
+      expect(events.count).to eq(2)
+      event = events.first
+      expect(event.action).to eq(Event::ACTION["delete"])
+      check_event(event)
     end
+  end
+
+  def check_event(event)
+    expect(event.user_id).to eq(@user.id)
+    expect(event.project_id).to eq(@project.id)
+    expect(event.category_type).to eq(@project.class.to_s)
+    expect(event.category_id).to eq(@project.id)
+    expect(event.resource_type).to eq(@todo.class.to_s)
+    expect(event.resource_id).to eq(@todo.id)
+    expect(event.resource_changes.blank?).to eq(true)
   end
 end
