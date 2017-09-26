@@ -72,7 +72,6 @@ class Event < ActiveRecord::Base
       self.project_id = self.resource.project_id
       self.category_type = "Project"
       self.category_id = self.project_id
-      self.team_id = self.project.team_id
     end
   end
 
@@ -85,7 +84,6 @@ class Event < ActiveRecord::Base
   class << self
     def query(options = {})
       scoped = Event.includes(:user, :category, :resource, :sub_resource).all
-      scoped = scoped.where(:team_id => options[:team_id]) if options[:team_id].present?
       if options[:project_id].present?
         scoped = scoped.where(:project_id => options[:project_id])
       else

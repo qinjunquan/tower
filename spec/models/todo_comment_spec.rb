@@ -19,7 +19,6 @@ RSpec.describe TodoComment, type: :model do
       expect(event.action).to eq(Event::ACTION["create"])
       expect(event.user_id).to eq(@user.id)
       expect(event.project_id).to eq(@project.id)
-      expect(event.team_id).to eq(@team.id)
       expect(event.category_type).to eq(@project.class.to_s)
       expect(event.category_id).to eq(@project.id)
       expect(event.resource_type).to eq(@todo.class.to_s)
