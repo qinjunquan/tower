@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'pry'
 
 RSpec.describe TeamsController, :type => :controller do
   context "test index action" do
